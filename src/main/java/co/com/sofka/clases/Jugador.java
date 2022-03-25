@@ -1,6 +1,11 @@
 package co.com.sofka.clases;
 
+import co.com.sofka.conectar.Conectar;
+import java.sql.Connection;
 import java.util.Scanner;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -9,14 +14,14 @@ import java.util.Scanner;
 public class Jugador {
 
     private String nombre;
-    private String cedula;
+    private int cedula;
     public Jugador ListaJugador[];
-    
-    public Jugador(){
-        
+
+    public Jugador() {
+
     }
 
-    public Jugador(String nombre, String cedula) {
+    public Jugador(String nombre, int cedula) {
         this.nombre = nombre;
         this.cedula = cedula;
     }
@@ -29,31 +34,55 @@ public class Jugador {
         this.nombre = nombre;
     }
 
-    public String getCedula() {
+    public int getCedula() {
         return cedula;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 
     public int addJugador() {
 
         Scanner sc = new Scanner(System.in);
+
         System.out.println("Ingrese el nombre del jugador: ");
-        String nombre = sc.nextLine();
-
+        setNombre(sc.nextLine()); 
         System.out.println("Ingrese la cedula: ");
-        String cedula = sc.nextLine();
-
+        setCedula(sc.nextInt()); 
+        sc.nextLine();
         System.out.println("Desea empezar a jugar? escribe si ó No");
         String respuesta = sc.nextLine();
 
         if ("si".equals(respuesta)) {
-
             return 1;
         }
         return 0;
-
     }
+
+    public int insertPlayer(Jugador jugador) {
+        Connection con = null;
+        PreparedStatement playerQuery = null;
+        Conectar conecta = new Conectar();
+        int rows = 0;
+
+        con = conecta.getConnection();
+        try {
+            playerQuery = con.prepareStatement("INSERT INTO player(id,name) VALUES(?,?);");
+            playerQuery.setInt(1, getCedula());
+            playerQuery.setString(2,getNombre());
+
+            
+            rows = playerQuery.executeUpdate();
+           
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return rows;
+    }
+
+    
+
 }
