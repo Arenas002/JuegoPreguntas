@@ -15,5 +15,6 @@ Importar y ejecutar el Script de SQL db/BD.sql
 ### otros
 
 se realizo el proyecto en NetBeans
+
 MySQL Connector/J versión 8.0.17 
 
