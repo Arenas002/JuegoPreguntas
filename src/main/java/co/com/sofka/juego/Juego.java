@@ -23,14 +23,12 @@ public class Juego {
     static PlayerPrize playerPrize = new PlayerPrize();
 
     public static void main(String[] args) {
-
-        roundList = ronda.getRoundList(); 
-       
         
+        roundList = ronda.getRoundList(); 
         iniciarJuego();
-
     }
 
+    // metodo que inicia el juego 
     
     public static void iniciarJuego() {
 
